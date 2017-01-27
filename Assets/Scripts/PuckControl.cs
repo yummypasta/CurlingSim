@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
+using System;
 
 public class PuckControl : MonoBehaviour
 {
@@ -11,6 +13,7 @@ public class PuckControl : MonoBehaviour
     public Vector2 initForce;
     public float threshold;
     public float dragIncrease;
+    public float swipyMultiply;
     state puckState;
     Rigidbody2D rigid;
 
@@ -37,14 +40,21 @@ public class PuckControl : MonoBehaviour
         else if(puckState == state.glide)
         {
             //rigid.AddForce(new Vector2(0, (Input.GetTouch(0).deltaPosition.x + Input.GetTouch(0).deltaPosition.y) * 12));
-            if (Input.GetKeyDown(KeyCode.Z))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 Debug.Log("addforce");
                 rigid.AddForce(new Vector2(0, 10));
-            }
-            if(rigid.velocity.y < threshold)
+              
+            }/*
+            for (int i = 0; i < Input.touchCount; i++)
+            {
+                rigid.AddForce(new Vector2(0, Math.Abs(Input.GetTouch(i).deltaPosition.x * swipyMultiply)));
+            }*/
+            rigid.AddForce(new Vector2(0, Math.Abs(Input.GetTouch(0).deltaPosition.x * swipyMultiply)));
+            if (rigid.velocity.y < threshold)
             {
                 Debug.Log("u ded get shrekt");
+                SceneManager.LoadScene("Menu");
             }
             rigid.drag += dragIncrease;
         }

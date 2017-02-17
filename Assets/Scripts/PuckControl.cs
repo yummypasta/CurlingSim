@@ -47,7 +47,7 @@ public class PuckControl : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 Debug.Log("addforce");
-                rigid.AddForce(new Vector2(0, 10));
+                rigid.AddForce(new Vector2(0, 30));
               
             }/*
             for (int i = 0; i < Input.touchCount; i++)
@@ -71,6 +71,7 @@ public class PuckControl : MonoBehaviour
             }
         }else if(puckState == state.end)
         {
+			ScoreManager.instance.latestScore = time;
             if (time < PlayerPrefs.GetFloat("highscore", 99999999.99f))
             {
                 PlayerPrefs.SetFloat("highscore", time);

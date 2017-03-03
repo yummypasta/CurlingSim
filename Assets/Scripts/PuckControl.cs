@@ -19,11 +19,12 @@ public class PuckControl : MonoBehaviour
     state puckState;
     Rigidbody2D rigid;
     public float time = 0;
+	public TargetAnim ta;
     // Use this for initialization
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
-        puckState = state.toss;
+		puckState = state.toss;
     }
 
     // Update is called once per frame
@@ -67,7 +68,7 @@ public class PuckControl : MonoBehaviour
             {
                 rigid.AddForce(new Vector2(0, Math.Abs(Input.GetTouch(0).deltaPosition.x * swipyMultiply)));
 
-                rigid.AddForce(new Vector2(0, Math.Abs(Input.GetTouch(0).deltaPosition.y * swipyMultiply)));
+                //rigid.AddForce(new Vector2(0, Math.Abs(Input.GetTouch(0).deltaPosition.y * swipyMultiply)));
             }
         }else if(puckState == state.end)
         {
@@ -78,9 +79,9 @@ public class PuckControl : MonoBehaviour
                 PlayerPrefs.Save();
             }
             Debug.Log("u ded get shrekt");
-
-            SceneManager.LoadScene("Menu");
-
+			rigid.velocity = Vector2.zero;
+			StartCoroutine (ta.GrowMe());
+			
         }
     }
 }
